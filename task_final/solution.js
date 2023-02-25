@@ -34,35 +34,19 @@
 // }
 
 function sendRequest(name, phone, address, goods, sum) {
-    let data = {goods: [], order: {}}; //Создали объект Data и задали для этого объекта пустой массив goods и пустой объект order
+    let data = {goods:[], order:{}}; 
+    let countOfGoods = goods.length;
 
-    let countOfGoods = goods.length;  //Посчитали количество товаров из параметра goods функции
+    for (let i = 0; i < countOfGoods; i += 1) {
+        data.goods[i].title.push(goods[i].title); // не понимаю как правильно должно быть. 
+        data.goods[i].count.push(goods[i].count);
+    } 
 
-    for (let i = 0; i <= countOfGoods; i += 1) {
-        data.goods.push(goods[i].title);
-    } // в цикле наполнили массив data.goods из параметра фукнции goods.title
-    data.order.address = address; // Добавили в объект Data объект Order. в Объект Order записали адрес и сумму.
+    data.order.address = `ул. ${street}, дом ${house}, ${entrance} подъезд, ${floor} этаж, кв. ${flat}`; // Добавили в объект Data объект Order. в Объект Order записали адрес и сумму.
     data.order.sum = sum; 
-    data.client = `${name} ${phone}`; //Добавили в объект дата строку client и записали в строку значение имени и телефона из фукнции.
+    data.client = `${name} ${phone}`; 
 
-//формирование структуры файла для преобразования в json:
-let dataJson =  {
-    data: {
-      client: data.client,
-      order: {
-        address: data.order.address,
-        sum: data.order.sum
-       },
-       goods: [
-         {
-           title: data.goods[],
-           count: countOfGoods
-         }
-      ]
-    }
- }
+ let jsonData = JSON.stringify({data: data});
 
- let jsonData = JSON.stringify(dataJson);
-
- return jsonData;
+ return data;
 }
