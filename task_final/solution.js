@@ -36,17 +36,18 @@
 function sendRequest(name, phone, address, goods, sum) {
     let data = {goods:[], order:{}}; 
     let countOfGoods = goods.length;
-
+    
     for (let i = 0; i < countOfGoods; i += 1) {
-        data.goods[i].title.push(goods[i].title); // не понимаю как правильно должно быть. 
-        data.goods[i].count.push(goods[i].count);
+        delete goods[i].id;
+        delete goods[i].price;
+        data.goods.push(goods[i]);
     } 
 
-    data.order.address = `ул. ${street}, дом ${house}, ${entrance} подъезд, ${floor} этаж, кв. ${flat}`; // Добавили в объект Data объект Order. в Объект Order записали адрес и сумму.
-    data.order.sum = sum; 
+    data.order.address = `ул. ${address.street}, дом ${address.house}, ${address.entrance} подъезд, ${address.floor} этаж, кв. ${address.flat}`; // Добавили в объект Data объект Order. в Объект Order записали адрес и сумму.
+    data.order.sum = sum;
     data.client = `${name} ${phone}`; 
 
  let jsonData = JSON.stringify({data: data});
 
- return data;
+ return jsonData;
 }
